@@ -70,8 +70,8 @@ namespace YAMLParser
                 solutiondir = yamlparser_parent;
             }
 
-            outputdir = solutiondir + outputdir;
-            outputdir_secondpass = solutiondir + outputdir_secondpass;
+			outputdir = System.IO.Path.Combine(solutiondir, outputdir);
+			outputdir_secondpass = System.IO.Path.Combine(solutiondir, outputdir_secondpass);
             List<MsgFileLocation> paths = new List<MsgFileLocation>();
             List<MsgFileLocation> pathssrv = new List<MsgFileLocation>();
             Console.WriteLine("Generating C# classes for ROS Messages...\n");
@@ -228,11 +228,12 @@ namespace YAMLParser
 
         public static void GenerateProject(List<MsgsFile> files, List<SrvsFile> srvfiles)
         {
-			if (!Directory.Exists(outputdir + Path.DirectorySeparatorChar + "Properties"))
-                Directory.CreateDirectory(outputdir + "Properties");
-			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "SerializationHelper.cs", Templates.SerializationHelper);
-			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "Interfaces.cs", Templates.Interfaces);
-			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + "AssemblyInfo.cs", Templates.AssemblyInfo);
+			String propertiesdir = System.IO.Path.Combine(outputdir, "Properties");
+			if (!Directory.Exists(propertiesdir))
+				Directory.CreateDirectory(propertiesdir);
+			File.WriteAllText(System.IO.Path.Combine(outputdir, "SerializationHelper.cs"), Templates.SerializationHelper);
+			File.WriteAllText(System.IO.Path.Combine(outputdir, "Interfaces.cs"), Templates.Interfaces);
+			File.WriteAllText(System.IO.Path.Combine(outputdir, "Properties") + Path.DirectorySeparatorChar + "AssemblyInfo.cs", Templates.AssemblyInfo);
             string[] lines = Templates.MessagesProj.Split('\n');
             string output = "";
             for (int i = 0; i < lines.Length; i++)

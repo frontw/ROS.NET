@@ -119,21 +119,21 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="AssemblyInfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>templateproject\assemblyinfo._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>TemplateProject\AssemblyInfo._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Interfaces" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>TemplateProject\Interfaces.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MessagesProj" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>templateproject\messages._csproj;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>TemplateProject\Messages._csproj;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MsgPlaceHolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>templateproject\placeholder._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>TemplateProject\PlaceHolder._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="SrvPlaceHolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>templateproject\srvplaceholder._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>TemplateProject\SrvPlaceHolder._cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="TempMessagesProj" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>templateproject\tempmessages._csproj;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>TemplateProject\TempMessages._csproj;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

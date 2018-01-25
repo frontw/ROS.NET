@@ -201,8 +201,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd "$(TargetDir)"
-YAMLParser.exe $(ConfigurationName) "$(SolutionDir) " "$(ProjectDir).." 
-echo YAMLParser.exe $(ConfigurationName) "$(SolutionDir) " "$(ProjectDir).."</PostBuildEvent>
+mono YAMLParser.exe $(ConfigurationName) "$(SolutionDir)" "$(ProjectDir).." 
+echo YAMLParser.exe $(ConfigurationName) "$(SolutionDir)" "$(ProjectDir).."</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
