@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace YAMLParser
 {
@@ -36,7 +37,7 @@ namespace YAMLParser
             packagedir = getPackagePath(root, path);
             package = getPackageName(path);
             extension = path.Split('.').Last();
-            basename = path.Replace(extension, "").Split('\\').Last().Trim('.');
+            basename = path.Replace(extension, "").Split('/').Last().Trim('.');
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace YAMLParser
         /// <returns>"package name"</returns>
         private static string getPackageName(string path)
         {
-            string[] chunks = path.Split('\\');
+            string[] chunks = path.Split('/');
             string foldername = chunks[chunks.Length - 2];
             if (msg_gen_folder_names.Contains(foldername))
                 foldername = chunks[chunks.Length - 3];
@@ -57,7 +58,7 @@ namespace YAMLParser
         private static string getPackagePath(string basedir, string msgpath)
         {
             string p = getPackageName(msgpath);
-            return basedir + "\\" + p;
+			return basedir + System.IO.Path.DirectorySeparatorChar + p;
         }
 
         public override bool Equals(object obj)
@@ -68,12 +69,12 @@ namespace YAMLParser
 
         public override int GetHashCode()
         {
-            return (package+"/"+basename).GetHashCode();
+			return (package+System.IO.Path.DirectorySeparatorChar+basename).GetHashCode();
         }
 
         public override string  ToString()
         {
-            return string.Format("{0}\\{1}.{2}", package, basename, extension);
+            return string.Format("{0}/{1}.{2}", package, basename, extension);
         }
     }
 

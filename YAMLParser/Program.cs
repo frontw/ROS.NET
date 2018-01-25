@@ -39,7 +39,7 @@ namespace YAMLParser
             string solutiondir;
             bool interactive = false; //wait for ENTER press when complete
             int firstarg = 0;
-            if (args.Length >= 1)
+            if (args.Length > 1)
             {
                 if (args[firstarg].Trim().Equals("-i"))
                 {
@@ -54,11 +54,11 @@ namespace YAMLParser
                 }
             }
             string yamlparser_parent = "";
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
-            while (di.Name != "YAMLParser")
-            {
-                di = Directory.GetParent(di.FullName);
-            }
+			DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory.ToString());
+//            while (di.Name != "YAMLParser")
+//            {
+//                di = Directory.GetParent(di.FullName);
+//            }
             di = Directory.GetParent(di.FullName);
             yamlparser_parent = di.FullName;
             if (args.Length - firstarg >= 1)
@@ -74,7 +74,7 @@ namespace YAMLParser
             outputdir_secondpass = solutiondir + outputdir_secondpass;
             List<MsgFileLocation> paths = new List<MsgFileLocation>();
             List<MsgFileLocation> pathssrv = new List<MsgFileLocation>();
-            Console.WriteLine("Generatinc C# classes for ROS Messages...\n");
+            Console.WriteLine("Generating C# classes for ROS Messages...\n");
             for (int i = firstarg; i < args.Length; i++)
             {
                 string d = new DirectoryInfo(args[i]).FullName;
@@ -84,6 +84,7 @@ namespace YAMLParser
             paths = MsgFileLocator.sortMessages(paths);
             foreach (MsgFileLocation path in paths)
             {
+				Console.WriteLine("msg path: " + path.ToString());
                 msgsFiles.Add(new MsgsFile(path));
             }
             foreach (MsgFileLocation path in pathssrv)
@@ -222,16 +223,16 @@ namespace YAMLParser
             {
                 file.Write(outputdir);
             }
-            File.WriteAllText(outputdir + "\\MessageTypes.cs", ToString().Replace("FauxMessages", "Messages"));
+			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "MessageTypes.cs", ToString().Replace("FauxMessages", "Messages"));
         }
 
         public static void GenerateProject(List<MsgsFile> files, List<SrvsFile> srvfiles)
         {
-            if (!Directory.Exists(outputdir + "\\Properties"))
-                Directory.CreateDirectory(outputdir + "\\Properties");
-            File.WriteAllText(outputdir + "\\SerializationHelper.cs", Templates.SerializationHelper);
-            File.WriteAllText(outputdir + "\\Interfaces.cs", Templates.Interfaces);
-            File.WriteAllText(outputdir + "\\Properties\\AssemblyInfo.cs", Templates.AssemblyInfo);
+			if (!Directory.Exists(outputdir + Path.DirectorySeparatorChar + "Properties"))
+                Directory.CreateDirectory(outputdir + "Properties");
+			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "SerializationHelper.cs", Templates.SerializationHelper);
+			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "Interfaces.cs", Templates.Interfaces);
+			File.WriteAllText(outputdir + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + "AssemblyInfo.cs", Templates.AssemblyInfo);
             string[] lines = Templates.MessagesProj.Split('\n');
             string output = "";
             for (int i = 0; i < lines.Length; i++)
@@ -249,19 +250,19 @@ namespace YAMLParser
                 {
                     foreach (MsgsFile m in files)
                     {
-                        output += "\t<Compile Include=\"" + m.Name.Replace('.', '\\') + ".cs\" />\n";
+						output += "\t<Compile Include=\"" + m.Name.Replace('.', Path.DirectorySeparatorChar) + ".cs\" />\n";
                     }
                     foreach (SrvsFile m in srvfiles)
                     {
-                        output += "\t<Compile Include=\"" + m.Name.Replace('.', '\\') + ".cs\" />\n";
+						output += "\t<Compile Include=\"" + m.Name.Replace('.', Path.DirectorySeparatorChar) + ".cs\" />\n";
                     }
                     output += "\t<Compile Include=\"SerializationHelper.cs\" />\n";
                     output += "\t<Compile Include=\"Interfaces.cs\" />\n";
                     output += "\t<Compile Include=\"MessageTypes.cs\" />\n";
                 }
             }
-            File.WriteAllText(outputdir + "\\" + name + ".csproj", output);
-            File.WriteAllText(outputdir + "\\.gitignore", "*");
+            File.WriteAllText(outputdir + "/" + name + ".csproj", output);
+            File.WriteAllText(outputdir + "/.gitignore", "*");
         }
 
         private static string __where_be_at_my_vc____is;
@@ -299,14 +300,15 @@ namespace YAMLParser
 
         public static void BuildProject(string spam)
         {
-            string F = VCDir + "\\msbuild.exe";
-            if (!File.Exists(F))
-            {
-                Exception up = new Exception("ALL OVER YOUR FACE\n" + F);
-                throw up;
-            }
+//            string F = VCDir + "\\msbuild.exe";
+			string F = "xbuild";
+//			if (!File.Exists(F))
+//            {
+//                Exception up = new Exception("ALL OVER YOUR FACE\n" + F);
+//                throw up;
+//            }
             Console.WriteLine("\n\n" + spam);
-            string args = "/nologo \"" + outputdir + "\\" + name + ".csproj\" /property:Configuration="+configuration;
+            string args = "/nologo \"" + outputdir + "/" + name + ".csproj\" /property:Configuration="+configuration;
             Process proc = new Process();
             proc.StartInfo.RedirectStandardOutput = true;
             proc.StartInfo.RedirectStandardError = true;
@@ -317,10 +319,10 @@ namespace YAMLParser
             proc.Start();
             string output = proc.StandardOutput.ReadToEnd();
             string error = proc.StandardError.ReadToEnd();
-            if (File.Exists(outputdir + "\\bin\\"+configuration+"\\" + name + ".dll"))
+            if (File.Exists(outputdir + "/bin/"+configuration+"/" + name + ".dll"))
             {
-                Console.WriteLine("\n\nGenerated DLL has been copied to:\n\t" + outputdir + "\\" + name + ".dll\n\n");
-                File.Copy(outputdir + "\\bin\\" + configuration + "\\" + name + ".dll", outputdir + "\\" + name + ".dll", true);
+                Console.WriteLine("\n\nGenerated DLL has been copied to:\n\t" + outputdir + "/" + name + ".dll\n\n");
+                File.Copy(outputdir + "/bin/" + configuration + "/" + name + ".dll", outputdir + "/" + name + ".dll", true);
                 Thread.Sleep(100);
             }
             else
