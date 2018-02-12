@@ -239,9 +239,10 @@ namespace YAMLParser
             for (int i = 0; i < lines.Length; i++)
             {
 #if FOR_UNITY
-                if (lines[i].Contains("TargetFrameworkProfile"))
-                    output += "<TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>\n";
-                else
+//				output += "<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>\n";
+//                if (lines[i].Contains("TargetFrameworkProfile"))
+//                    output += "<TargetFrameworkProfile>Unity Full v4.6</TargetFrameworkProfile>\n";
+//                else
 #endif
                 {
                     output += "" + lines[i] + "\n";
@@ -275,7 +276,7 @@ namespace YAMLParser
                 if (__where_be_at_my_vc____is != null) return __where_be_at_my_vc____is;
                 foreach (string possibledir in new[] {"\\Microsoft.NET\\Framework64\\", "\\Microsoft.NET\\Framework"})
                 {
-                    foreach (string possibleversion in new[] {"v3.5", "v4.0"})
+                    foreach (string possibleversion in new[] {"v4.0", "v4.0"})
                     {
                         if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\.." + possibledir)) continue;
                         foreach (string dir in Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\.." + possibledir))
