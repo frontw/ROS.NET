@@ -364,13 +364,13 @@ namespace Ros_CSharp
         /// <returns> </returns>
         public static m.Time GetTime()
         {
-            return GetTime(DateTime.Now);
+            return GetTime(DateTime.UtcNow);
         }
 
         private static void SimTimeCallback(TimeSpan ts)
         {
             lastSimTime = ts;
-            lastSimTimeReceived = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
+            lastSimTimeReceived = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
         }
 
         /// <summary>
